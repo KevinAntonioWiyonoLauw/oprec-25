@@ -38,6 +38,9 @@ export async function middleware(request: NextRequest) {
   const isPublicRoute = PUBLIC_ROUTES.some((route) =>
     pathname.startsWith(route),
   );
+
+  console.log(`Path: ${pathname}, Has AccessToken: ${!!accessToken}, Has RefreshToken: ${!!refreshToken}`);
+
   const isAdminRoute = ADMIN_ROUTES.some((route) => pathname.startsWith(route));
   // always allow access to root route
   if (pathname === "/") {
@@ -92,6 +95,11 @@ export async function middleware(request: NextRequest) {
         }
       }
     }
+    return NextResponse.next();
+  }
+
+  if (pathname === "/divisi" && request.nextUrl.searchParams.get("login") === "success") {
+    console.log("Login sukses terdeteksi, bypass middleware validation");
     return NextResponse.next();
   }
 
