@@ -4,6 +4,7 @@ import { Eye, EyeOff, Info, LoaderCircle, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface FormData {
   email: string;
@@ -11,6 +12,7 @@ interface FormData {
 }
 
 const LoginForm = () => {
+  const { login, error: authError, loading: authLoading } = useAuth();
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -23,30 +25,11 @@ const LoginForm = () => {
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
       setError(null);
-      setLoading(true);
-  
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-        // Tidak perlu credentials: include karena kita tidak pakai cookies
-      });
-  
-      if (!response.ok) throw new Error("Incorrect email or password.");
-  
-      const user = await response.json();
-      
-      // Simpan token di localStorage
-      localStorage.setItem('accessToken', user.accessToken);
-      localStorage.setItem('refreshToken', user.refreshToken);
-      
-      if (user.isAdmin) {
-        router.push("/admin");
-      } else {
-        router.push("/divisi");
+      await login(data.email, data.password);
+      if (authError) {
+        setError(authError);
       }
     } catch (err: any) {
-      setLoading(false);
       setError(err.message || "Failed to log in");
     }
   };
@@ -143,9 +126,9 @@ const LoginForm = () => {
           variant={`white`}
           size={`lg`}
           className="mt-2 w-full text-base"
-          disabled={loading}
+          disabled={authLoading}
         >
-          {loading ? (
+          {authLoading ? (
             <div className="flex items-center justify-center gap-2">
               <LoaderCircle className="animate-spin" size={20} />
             </div>

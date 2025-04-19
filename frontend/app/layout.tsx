@@ -4,6 +4,7 @@ import SmoothScrolling from "@/contexts/SmoothScroll";
 import { Poppins } from "next/font/google";
 import GSAPProvider from "@/contexts/GSAP";
 import { Toaster } from "@/components/ui/toaster";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 export const metadata: Metadata = {
   title: "Oprec Makomti",
@@ -26,7 +27,9 @@ export default function RootLayout({
       <body className={`${poppins.className} text-custom-silver`}>
         <SmoothScrolling>
           <GSAPProvider>
+          <AuthProvider>
             {children}
+            </AuthProvider>
             <Toaster />
           </GSAPProvider>
         </SmoothScrolling>
