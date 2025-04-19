@@ -27,10 +27,7 @@ const LoginForm = () => {
   
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
         method: "POST",
-        headers: { 
-          "Content-Type": "application/json", 
-          "Accept": "application/json"
-        },
+        headers: { "Content-Type": "application/json", "Accept": "application/json"},
         body: JSON.stringify(data),
         credentials: "include",
       });
@@ -38,8 +35,8 @@ const LoginForm = () => {
       if (!response.ok) throw new Error("Incorrect email or password.");
   
       const user = await response.json();
-      
-      // Manual redirect yang lebih sederhana, menghindari middleware
+  
+      // Gunakan window.location untuk hard reload (lebih efektif untuk cookie)
       window.location.href = user.isAdmin ? "/admin" : "/divisi";
       
     } catch (err: any) {
