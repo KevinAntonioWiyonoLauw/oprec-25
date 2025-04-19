@@ -24,20 +24,30 @@ const LoginForm = () => {
     try {
       setError(null);
       setLoading(true);
-
+  
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
         method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        headers: { 
+          "Content-Type": "application/json", 
+          "Accept": "application/json"
+        },
         body: JSON.stringify(data),
         credentials: "include",
       });
-
+  
       if (!response.ok) throw new Error("Incorrect email or password.");
-
+  
       const user = await response.json();
-
-      // Gunakan hard redirect agar cookie cross-domain langsung ter-apply
-      window.location.href = user.isAdmin ? "/admin" : "/divisi";
+      
+      // Tambahkan sedikit delay untuk memastikan cookies disimpan dulu
+      setTimeout(() => {
+        if (user.isAdmin) {
+          router.push("/admin");
+        } else {
+          router.push("/divisi");
+        }
+      }, 300);
+      
     } catch (err: any) {
       setLoading(false);
       setError(err.message || "Failed to log in");
@@ -96,19 +106,19 @@ const LoginForm = () => {
               Password
             </label>
             {loadingReset ? (
-              <div className="flex items-center justify-center gap-2">
-                <LoaderCircle className="animate-spin" size={20} />
-              </div>
-            ) : (
-              <button
-                type="button"
-                onClick={handlePasswordReset}
-                tabIndex={-1}
-                className="text-sm text-blue-500 hover:underline"
-              >
-                Forgot password?
-              </button>
-            )}
+            <div className="flex items-center justify-center gap-2">
+              <LoaderCircle className="animate-spin" size={20} />
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={handlePasswordReset}
+              tabIndex={-1}
+              className="text-sm text-blue-500 hover:underline"
+            >
+              Forgot password?
+            </button>
+          )}
           </div>
 
           <div className="relative">
@@ -151,6 +161,7 @@ const LoginForm = () => {
   );
 };
 
+// toast for error
 const ErrorToast = ({ message, onClick }: { message: string; onClick: () => void }) => (
   <div className="flex w-full max-w-sm items-center justify-between rounded-lg border-2 border-red-800 bg-red-900/30 p-4 font-medium text-custom-silver">
     <span>{message}</span>
