@@ -24,23 +24,24 @@ const LoginForm = () => {
     try {
       setError(null);
       setLoading(true);
-
+  
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" , "Accept": "application/json"},
+        headers: { 
+          "Content-Type": "application/json", 
+          "Accept": "application/json"
+        },
         body: JSON.stringify(data),
         credentials: "include",
       });
-
+  
       if (!response.ok) throw new Error("Incorrect email or password.");
-
+  
       const user = await response.json();
-
-      if (user.isAdmin) {
-        router.push("/admin");
-      } else {
-        router.push("/divisi");
-      }
+      
+      // Manual redirect yang lebih sederhana, menghindari middleware
+      window.location.href = user.isAdmin ? "/admin" : "/divisi";
+      
     } catch (err: any) {
       setLoading(false);
       setError(err.message || "Failed to log in");
