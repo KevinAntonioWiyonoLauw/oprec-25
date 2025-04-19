@@ -24,18 +24,22 @@ const LoginForm = () => {
     try {
       setError(null);
       setLoading(true);
-
+  
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" , "Accept": "application/json"},
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
-        credentials: "include",
+        // Tidak perlu credentials: include karena kita tidak pakai cookies
       });
-
+  
       if (!response.ok) throw new Error("Incorrect email or password.");
-
+  
       const user = await response.json();
-
+      
+      // Simpan token di localStorage
+      localStorage.setItem('accessToken', user.accessToken);
+      localStorage.setItem('refreshToken', user.refreshToken);
+      
       if (user.isAdmin) {
         router.push("/admin");
       } else {
