@@ -423,6 +423,13 @@ console.log(wawancaraData);
       await wawancaraBaru.save();
     }
     console.log('Data successfully seeded!');
+
+    await Divisi.deleteMany({}); // Hapus data divisi yang sudah ada (opsional)
+  for(const divisi of divisiData){
+    const divisiModel = new Divisi(divisi);
+    await divisiModel.save();
+  console.log(`Added division: ${divisi.judul}`);
+  }
     
     // Disconnect from MongoDB
     await mongoose.disconnect();
