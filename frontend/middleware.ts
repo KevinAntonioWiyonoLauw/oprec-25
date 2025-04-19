@@ -86,7 +86,7 @@ export async function middleware(request: NextRequest) {
             new URL("/", request.url),
           );
           // Delete accessToken and refreshToken cookies
-          response.cookies.set("refreshToken", "", { maxAge: -1, path: "/", domain: "oprec-25-production.up.railway.app" });
+          response.cookies.set("refreshToken", "", { maxAge: -1, path: "/" });
           response.cookies.set("accessToken", "", { maxAge: -1, path: "/", domain: "oprec-25-production.up.railway.app" });
           return response;
         }
@@ -116,14 +116,14 @@ export async function middleware(request: NextRequest) {
       if(!refreshResponse.ok) {
         const response = NextResponse.next();
         // Delete accessToken and refreshToken cookies
-        response.cookies.set("refreshToken", "", { maxAge: -1, path: "/", domain: "oprec-25-production.up.railway.app" });
+        response.cookies.set("refreshToken", "", { maxAge: -1, path: "/" });
         response.cookies.set("accessToken", "", { maxAge: -1, path: "/", domain: "oprec-25-production.up.railway.app" });
         return response;
       }
     }
     // If validation fails, proceed to login
     const response = NextResponse.next();
-    response.cookies.set("refreshToken", "", { maxAge: -1, path: "/", domain: "oprec-25-production.up.railway.app" });
+    response.cookies.set("refreshToken", "", { maxAge: -1, path: "/" });
     response.cookies.set("accessToken", "", { maxAge: -1, path: "/", domain: "oprec-25-production.up.railway.app" });
     return response;
   }
@@ -168,12 +168,12 @@ export async function middleware(request: NextRequest) {
         return response;
       }
       const response = NextResponse.redirect(new URL("/", request.url));
-      response.cookies.set("refreshToken", "", { maxAge: -1, path: "/", domain: "oprec-25-production.up.railway.app" });
+      response.cookies.set("refreshToken", "", { maxAge: -1, path: "/" });
       response.cookies.set("accessToken", "", { maxAge: -1, path: "/", domain: "oprec-25-production.up.railway.app" });
       return response;
     }
     const response = NextResponse.redirect(new URL("/", request.url));
-    response.cookies.set("refreshToken", "", { maxAge: -1, path: "/", domain: "oprec-25-production.up.railway.app" });
+    response.cookies.set("refreshToken", "", { maxAge: -1, path: "/" });
     response.cookies.set("accessToken", "", { maxAge: -1, path: "/", domain: "oprec-25-production.up.railway.app" });
     return response;
   }
@@ -223,13 +223,13 @@ export async function middleware(request: NextRequest) {
         const response = NextResponse.redirect(
           new URL("/", request.url),
         );
-        response.cookies.set("refreshToken", "", { maxAge: -1, path: "/", domain: "oprec-25-production.up.railway.app" });
+        response.cookies.set("refreshToken", "", { maxAge: -1, path: "/" });
         response.cookies.set("accessToken", "", { maxAge: -1, path: "/", domain: "oprec-25-production.up.railway.app" });
       }
     }
     // If both validation and refresh fail, redirect to login
     const response = NextResponse.redirect(new URL("/", request.url));
-    response.cookies.set("refreshToken", "", { maxAge: -1, path: "/", domain: "oprec-25-production.up.railway.app" });
+    response.cookies.set("refreshToken", "", { maxAge: -1, path: "/" });
     response.cookies.set("accessToken", "", { maxAge: -1, path: "/", domain: "oprec-25-production.up.railway.app" });
     return response;
   }

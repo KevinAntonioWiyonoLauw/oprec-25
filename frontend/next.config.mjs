@@ -28,7 +28,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Access-Control-Allow-Origin',
-            value: 'https://oprec-25-production.up.railway.app', // You can restrict this to specific origins like 'https://yourdomain.com'
+            value: 'https://oprec-25-web-production.up.railway.app', // You can restrict this to specific origins like 'https://yourdomain.com'
           },
           {
             key: 'Access-Control-Allow-Methods',
