@@ -1,4 +1,4 @@
-import {Router} from "express";
+import express, { Router } from "express";
 import{
     login,
     register,
@@ -15,7 +15,7 @@ import{
 } from "@/controllers/userControllers";
 import { authenticateToken } from "@middlewares/auth";
 
-const router = Router();
+const router: Router = express.Router();
 
 router.post('/register', register);
 router.post('/login', login);

@@ -1,4 +1,4 @@
-import {Router} from "express";
+import express, { Router } from "express";
 import{
     pilihDivisi,
     getAllDivisi,
@@ -11,7 +11,7 @@ import{
 } from "@controllers/penugasanControllers"
 import { authenticateToken } from "@middlewares/auth";
 
-const router = Router();
+const router: Router = express.Router();
 
 router.post('/:slug/choose', authenticateToken, pilihDivisi);
 router.post('/:slug/submit', authenticateToken, submitPenugasan);

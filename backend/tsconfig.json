@@ -36,8 +36,7 @@
       "declaration": true,          // Generate corresponding .d.ts files
       "declarationMap": true,       // Generate sourcemaps for d.ts files
       
-      // Advanced
-      "skipLibCheck": true,         // Skip type checking of declaration files
+      // Advanced        // Skip type checking of declaration files
       "forceConsistentCasingInFileNames": true, // Ensure consistent casing in file names
       
       // Paths and Aliases
