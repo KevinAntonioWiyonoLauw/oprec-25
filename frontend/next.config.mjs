@@ -28,7 +28,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Access-Control-Allow-Origin',
-            value: 'https://oprec.makomti.web.id', // You can restrict this to specific origins like 'https://yourdomain.com'
+            value: 'https://oprec-25.vercel.app', // You can restrict this to specific origins like 'https://yourdomain.com'
           },
           {
             key: 'Access-Control-Allow-Methods',
