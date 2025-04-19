@@ -13,8 +13,8 @@ dotenv.config();
 const app = express();
 app.use(cors({
     origin: [
-        'https://oprecoti-25.vercel.app',
-        'https://www.oprecoti-25.vercel.app',
+        'https://oprec-25-web-production.up.railway.app',
+        'https://www.oprec-25-web-production.up.railway.app',
         'http://localhost:3000'
     ],
     credentials: true
